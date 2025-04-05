@@ -14,24 +14,33 @@ public class Main {
             allUsers.addAll(Data2.getAllOtherUsers());
         }
 
-        /* // If you want to try Stream API then make comment for "for" loop example.
+        // If you want to try Stream API then make comment for "for" loop method.
         // Using the Stream API map method
+        //streamAPIExecution(allUsers);
+
+        // Using the For Loop method
+        forLoopExecution(allUsers);
+
+    }
+
+    private static void streamAPIExecution(List<User> allUsers) {
         long startStream = System.currentTimeMillis();
         List<UserResponse> userResponses = allUsers.stream().filter(user -> user.getDateOfBirth().isAfter( LocalDate.parse("1990-01-01"))).map(user -> new UserResponse.Builder()
-                                                                                                .withId(user.getId())
-                                                                                                .withFirstName(user.getFirstName())
-                                                                                                .withLastName(user.getLastName())
-                                                                                        .build())
-                                                                            .collect(Collectors.toList());
+                        .withId(user.getId())
+                        .withFirstName(user.getFirstName())
+                        .withLastName(user.getLastName())
+                        .build())
+                .collect(Collectors.toList());
         long endStream = System.currentTimeMillis();
         long durationStream = endStream - startStream;
         System.out.println("Stream API map execution time: " + durationStream + " ms");
-        */
+    }
 
+    private static void forLoopExecution(List<User> allUsers) {
         long startLoop = System.currentTimeMillis();
         List<UserResponse> userResponses = new ArrayList<>();
 
-        for (User user : allUsers ) {
+        for (User user : allUsers) {
             if (user.getDateOfBirth().isAfter(LocalDate.parse("1900-01-01"))) {
                 UserResponse userResponse = new UserResponse.Builder()
                         .withId(user.getId())
@@ -44,7 +53,5 @@ public class Main {
         long endLoop = System.currentTimeMillis();
         long durationLoop = endLoop - startLoop;
         System.out.println("For-loop execution time: " + durationLoop + " ms");
-
-
     }
 }
